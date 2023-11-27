@@ -3,9 +3,10 @@ package com.example.composearticle
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -14,8 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting()
+                    ComposeQuadrant()
                 }
             }
         }
@@ -42,42 +42,89 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(modifier: Modifier = Modifier) {
-    val image = painterResource(R.drawable.ic_task_completed)
-    Box {
-        Column(modifier = Modifier.align(Alignment.Center) ) {
-            Image(
-                painter = image,
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
-                modifier = modifier
-                    .align(Alignment.CenterHorizontally)
-            )
-            Text(
-                text = stringResource(R.string.tasks_completed),
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = modifier
-                    .padding(top = 24.dp)
-                    .padding(bottom = 8.dp)
-                    .align(Alignment.CenterHorizontally)
-            )
-            Text(
-                text = stringResource(R.string.nice_work),
-                textAlign= TextAlign.Justify,
-                fontSize = 16.sp,
-                modifier = modifier
-                    .align(Alignment.CenterHorizontally)
-            )
+fun ComposeQuadrant() {
+    Column {
+        Row(Modifier.weight(1f)) {
+            Column(
+                Modifier
+                    .weight(1f)
+            ) {
+                Card(
+                    title = stringResource(R.string.text_composable),
+                    text = stringResource(R.string.displays_text_and_follows),
+                    backgroundColor = R.color.lila2
+                )
+            }
+            Column(
+                Modifier
+                    .weight(1f)
+            ) {
+                Card(
+                    title = stringResource(R.string.image_composable),
+                    text = stringResource(R.string.creates_a_composable),
+                    backgroundColor = R.color.lila3
+                )
+            }
+        }
+
+        Row(Modifier.weight(1f)) {
+            Column(
+                Modifier
+                    .weight(1f)
+            ) {
+                Card(
+                    title = stringResource(R.string.row_composable),
+                    text = stringResource(R.string.a_layout_composable),
+                    backgroundColor = R.color.lila4
+                )
+            }
+            Column(
+                Modifier
+                    .weight(1f)
+            ) {
+                Card(
+                    title = stringResource(R.string.column_composable),
+                    text = stringResource(R.string.a_layout_composable_2),
+                    backgroundColor = R.color.lila1
+                )
+            }
         }
     }
+}
 
+@Composable
+fun Card(
+    title: String,
+    text: String,
+    backgroundColor: Int,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(colorResource(backgroundColor))
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = title,
+            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp,
+            modifier = modifier
+                .padding(bottom = 16.dp)
+        )
+        Text(
+            text = text,
+            textAlign = TextAlign.Justify,
+        )
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     ComposeArticleTheme {
-        Greeting()
+        ComposeQuadrant()
     }
 }
