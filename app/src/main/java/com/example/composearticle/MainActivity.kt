@@ -3,12 +3,17 @@ package com.example.composearticle
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -16,7 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +39,18 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ComposeQuadrant()
+                    Box(Modifier.fillMaxSize()) {
+                        Box(modifier = Modifier.align(Alignment.Center)) {
+                            MainCard(R.drawable.x, "Full Name", "Title")
+                        }
+                        Box(modifier = Modifier.align(Alignment.BottomCenter)) {
+                            Contacts(
+                                number = "+00(00) 123-45-67",
+                                email = "email@gmail.com",
+                                linkedIn = "@myLinkedIn"
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -42,55 +58,77 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ComposeQuadrant() {
-    Column {
-        Row(Modifier.weight(1f)) {
-            Column(
-                Modifier
-                    .weight(1f)
-            ) {
-                Card(
-                    title = stringResource(R.string.text_composable),
-                    text = stringResource(R.string.displays_text_and_follows),
-                    backgroundColor = R.color.lila2
-                )
-            }
-            Column(
-                Modifier
-                    .weight(1f)
-            ) {
-                Card(
-                    title = stringResource(R.string.image_composable),
-                    text = stringResource(R.string.creates_a_composable),
-                    backgroundColor = R.color.lila3
-                )
-            }
+fun MainCard(img: Int, fullName: String, title: String) {
+
+    Column(Modifier.fillMaxWidth()) {
+        Image(
+            painter = painterResource(id = img),
+            contentDescription = null,
+            Modifier
+                .height(160.dp)
+                .width(160.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+        Text(
+            text = fullName,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(8.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+        Text(
+            text = title,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+        )
+    }
+
+}
+
+@Composable
+fun Contacts(number: String, linkedIn: String, email: String) {
+    Column(Modifier.padding(bottom = 16.dp)) {
+        Row {
+            Image(
+                painter = painterResource(id = R.drawable.x),
+                contentDescription = "phone number",
+                modifier = Modifier
+                    .height(40.dp)
+                    .width(40.dp)
+                    .padding(8.dp)
+            )
+            Text(text = number, modifier = Modifier.align(Alignment.CenterVertically))
+        }
+        Row {
+            Image(
+                painter = painterResource(id = R.drawable.x),
+                contentDescription = "linkedIn",
+                modifier = Modifier
+                    .height(40.dp)
+                    .width(40.dp)
+                    .padding(8.dp)
+            )
+            Text(text = linkedIn, modifier = Modifier.align(Alignment.CenterVertically))
+        }
+        Row {
+            Image(
+                painter = painterResource(id = R.drawable.x),
+                contentDescription = "email",
+                modifier = Modifier
+                    .height(40.dp)
+                    .width(40.dp)
+                    .padding(8.dp)
+            )
+            Text(text = email, modifier = Modifier.align(Alignment.CenterVertically))
         }
 
-        Row(Modifier.weight(1f)) {
-            Column(
-                Modifier
-                    .weight(1f)
-            ) {
-                Card(
-                    title = stringResource(R.string.row_composable),
-                    text = stringResource(R.string.a_layout_composable),
-                    backgroundColor = R.color.lila4
-                )
-            }
-            Column(
-                Modifier
-                    .weight(1f)
-            ) {
-                Card(
-                    title = stringResource(R.string.column_composable),
-                    text = stringResource(R.string.a_layout_composable_2),
-                    backgroundColor = R.color.lila1
-                )
-            }
-        }
     }
+
 }
+
 
 @Composable
 fun Card(
@@ -116,7 +154,7 @@ fun Card(
         )
         Text(
             text = text,
-            textAlign = TextAlign.Justify,
+            textAlign = TextAlign.Justify
         )
     }
 }
@@ -125,6 +163,17 @@ fun Card(
 @Composable
 fun GreetingPreview() {
     ComposeArticleTheme {
-        ComposeQuadrant()
+        Box(Modifier.fillMaxSize()) {
+            Box(modifier = Modifier.align(Alignment.Center)) {
+                MainCard(R.drawable.x, "Full Name", "Title")
+            }
+            Box(modifier = Modifier.align(Alignment.BottomCenter)) {
+                Contacts(
+                    number = "+00(00) 123-45-67",
+                    email = "email@gmail.com",
+                    linkedIn = "@myLinkedIn"
+                )
+            }
+        }
     }
 }
